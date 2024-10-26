@@ -12,6 +12,7 @@ This project also serves as a solid foundation for those who want to learn how S
 - **QR Code Generation**: Automatically generate a QR code for each URL, making it easy to access the link using a smartphone or other QR code scanners. 🌱
 - **Categorization**: Organize URLs into categories for better management and retrieval. 🌱
 - **Tagging System**: Use tags to classify URLs, allowing for enhanced searchability and filtering. 🌱
+- **Test**:  Set up and write app tests. 🌱
 - **Multi-language Support**: The application is built to support multiple languages, ensuring accessibility for a broader audience. 🚧
 - **API Integration**: Implement a RESTful API to allow external applications to interact with the QR code generation and URL storage functionalities. 🚧
 - **Webhooks**: Introduce webhook support for real-time notifications on URL status changes. 🚧
