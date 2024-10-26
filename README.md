@@ -24,7 +24,7 @@ This project also serves as a solid foundation for those who want to learn how S
 - **Unit Testing**: Implement unit tests for core functionalities using PHPUnit. 🛠️
 - **Continuous Integration/Continuous Deployment (CI/CD)**: Set up a CI/CD pipeline for automated testing and deployment. 🛠️
 - **Documentation**: Enhance code documentation using PHPDoc for clarity. 🛠️
-- - **Setup**: Set up the app in a Docker environment. 🛠️
+- **Setup**: Set up the app in a Docker environment. 🛠️
 
 
 ### Feature Development Status
