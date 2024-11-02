@@ -3,6 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Qrcode;
+use App\Entity\Tag;
+use App\Entity\User;
+use App\Pagination\Paginator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -15,6 +18,20 @@ class QrcodeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Qrcode::class);
     }
+    public function findLatest(?User $author): ?Qrcode
+    {
+        if ($author === null) {
+            return null;
+        }
+
+        return $this->createQueryBuilder('q')
+            ->andWhere('q.author = :val')
+            ->setParameter('val', $author)
+            ->orderBy('q.createdAt', 'DESC')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
 
     //    /**
     //     * @return Qrcode[] Returns an array of Qrcode objects

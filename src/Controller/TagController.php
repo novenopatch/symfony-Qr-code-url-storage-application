@@ -17,14 +17,17 @@ final class TagController extends AbstractController
     #[Route(name: 'app_tag_index', methods: ['GET'])]
     public function index(TagRepository $tagRepository): Response
     {
-        return $this->render('tag/index.html.twig', [
+        return $this->render('pages/tag/index.html.twig', [
             'tags' => $tagRepository->findAll(),
         ]);
     }
 
+
     #[Route('/new', name: 'app_tag_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $tag = new Tag();
         $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
@@ -36,7 +39,7 @@ final class TagController extends AbstractController
             return $this->redirectToRoute('app_tag_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('tag/new.html.twig', [
+        return $this->render('pages/tag/new.html.twig', [
             'tag' => $tag,
             'form' => $form,
         ]);
@@ -45,8 +48,8 @@ final class TagController extends AbstractController
     #[Route('/{id}', name: 'app_tag_show', methods: ['GET'])]
     public function show(Tag $tag): Response
     {
-
-        return $this->render('tag/show.html.twig', [
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        return $this->render('pages/tag/show.html.twig', [
             'tag' => $tag,
         ]);
     }
@@ -54,6 +57,8 @@ final class TagController extends AbstractController
     #[Route('/{id}/edit', name: 'app_tag_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Tag $tag, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
 
@@ -63,7 +68,7 @@ final class TagController extends AbstractController
             return $this->redirectToRoute('app_tag_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('tag/edit.html.twig', [
+        return $this->render('pages/tag/edit.html.twig', [
             'tag' => $tag,
             'form' => $form,
         ]);
@@ -72,6 +77,9 @@ final class TagController extends AbstractController
     #[Route('/{id}', name: 'app_tag_delete', methods: ['POST'])]
     public function delete(Request $request, Tag $tag, EntityManagerInterface $entityManager): Response
     {
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('ROLE_USER');
         if ($this->isCsrfTokenValid('delete'.$tag->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($tag);
             $entityManager->flush();
@@ -79,4 +87,5 @@ final class TagController extends AbstractController
 
         return $this->redirectToRoute('app_tag_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }

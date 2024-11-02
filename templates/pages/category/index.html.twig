@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category index{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-semibold mb-4">Category Index</h1>
+
+        <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id</th>
+                    <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                    <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Slug</th>
+                    <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                    <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
+                    <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated At</th>
+                    <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                {% for category in categories %}
+                    <tr>
+                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">{{ category.id }}</td>
+                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">{{ category.name }}</td>
+                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">{{ category.slug }}</td>
+                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">{{ category.description }}</td>
+                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">{{ category.createdAt ? category.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">{{ category.updatedAt ? category.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td class="px-4 py-2 whitespace-nowrap text-sm">
+                            <a href="{{ path('app_category_show', {'id': category.id}) }}" class="text-indigo-600 hover:text-indigo-900 mr-2">Show</a>
+                            <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="px-4 py-4 text-center text-gray-500">No records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-4">
+            <a href="{{ path('app_category_new') }}" class="inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700">
+                Create New
+            </a>
+        </div>
+    </div>
+
+{% endblock %}

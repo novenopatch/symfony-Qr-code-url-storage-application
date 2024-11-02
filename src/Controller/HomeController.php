@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Qrcode;
 use App\Form\QrcodeType;
+use App\Repository\QrcodeRepository;
 use App\Service\QrcodeGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,31 +15,27 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomeController extends AbstractController
 {
 
-    public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-    )
-    {
-    }
 
-    #[Route('/{id?}', name: 'app_home',requirements: ['id' => '\d+'])]
-    public function index(?Qrcode $qrcode,Request $request,QrcodeGenerator $qrcodeGenerator): Response
+
+    #[Route('/', name: 'app_home')]
+    public function index(Request $request,QrcodeGenerator $qrcodeGenerator,EntityManagerInterface $entityManager, QrcodeRepository $qrcodeRepository): Response
     {
-        $form = $this
-            ->createForm(QrcodeType::class)->handleRequest($request);
+        $qrcode = new Qrcode();
+        $form = $this->createForm(QrcodeType::class, $qrcode);
+        $form->handleRequest($request);
+        $user = $this->getUser();
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var Qrcode $data
-             */
-            $data = $form->getData();
-            $this->entityManager->persist($data);
-            $this->entityManager->flush();
-            return $this->redirectToRoute('app_home', ['id'=>$data->getId()], Response::HTTP_SEE_OTHER);
+            $qrcode->setAuthor($user);
+            $entityManager->persist($qrcode);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_qrcode_show', ['id'=>$qrcode->getId()], Response::HTTP_SEE_OTHER);
         }
-        $qrcodeSvg = $qrcodeGenerator->generate($qrcode?->getData());
-        return $this->render('home/index.html.twig', [
+        $l_qrcode =$qrcodeRepository->findLatest($user);
+        $qrcodeSvg = $qrcodeGenerator->generate($l_qrcode?->getData());
+        return $this->render('pages/home/index.html.twig', [//$this->render('pages/home/index.html.twig', [
             'form' => $form,
-            'qrcode' => $qrcode,
-            'qrcodeSvg' => $qrcodeSvg,
+            'l_qrcode' => $l_qrcode,
+            'l_qrcodeSvg' => $qrcodeSvg,
         ]);
     }
 }

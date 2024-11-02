@@ -16,15 +16,11 @@ class CategoryType extends AbstractType
             ->add('name')
             ->add('slug')
             ->add('description')
-            ->add('createdAt', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('updatedAt', null, [
-                'widget' => 'single_text',
-            ])
             ->add('parent', EntityType::class, [
                 'class' => Category::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
+                'required' => false,
+
             ])
         ;
     }

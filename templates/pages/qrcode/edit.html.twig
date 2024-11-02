@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Qrcode{% endblock %}
+
+{% block body %}
+    <h1>Edit Qrcode</h1>
+        {{ include('pages/qrcode/_form.html.twig', {'button_label': 'Update'}) }}
+
+
+
+    <a href="{{ path('app_qrcode_index') }}">
+        <span>{{ ux_icon('bi:arrow-left') }}back to list</span>
+    </a>
+
+    {{ include('pages/qrcode/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+
+
+
+
+{% block content %}
+
+    <article>
+        {% block package_header %}{% endblock %}
+
+        {% block package_content %}
+            <section class="container-fluid container-xxl px-4 pt-4 px-md-5 pt-md-5">
+                <div class="arrow mb-3 d-none d-md-block"></div>
+                {% block package_demo %}
+                    {% if block('demo_title') is defined %}
+                        {% set demo_title = block('demo_title') %}
+                        {% set demo_content = block('demo_content') %}
+                    {% endif %}
+                {% endblock %}
+            </section>
+        {% endblock %}
+
+
+
+    </article>
+
+{% endblock %}

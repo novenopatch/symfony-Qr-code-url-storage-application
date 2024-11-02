@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Qrcode index{% endblock %}
+
+{% block body %}
+
+
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-semibold mb-4">QR Code Index</h1>
+
+        <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+            <table id="example" class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">URL</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200"></tbody>
+            </table>
+        </div>
+
+        <div class="mt-4">
+            <a href="{{ path('app_qrcode_new') }}" class="inline-block px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700">
+                {{ ux_icon('bi:plus-lg') }}
+            </a>
+        </div>
+    </div>
+
+    {% block Otherjavascripts %}
+
+    {% endblock %}
+
+
+
+{% endblock %}

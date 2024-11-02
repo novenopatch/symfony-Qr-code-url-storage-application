@@ -1,0 +1,7 @@
+# .symfony.local.yaml
+workers:
+  # ...
+  consume:
+    cmd: ['symfony', 'console', 'messenger:consume', 'async']
+  tailwind:
+    cmd: ['symfony', 'console', 'tailwind:build', '--watch']

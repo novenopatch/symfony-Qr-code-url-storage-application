@@ -16,6 +16,15 @@ class TagRepository extends ServiceEntityRepository
         parent::__construct($registry, Tag::class);
     }
 
+    public function searchTags(string $name):array
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.name LIKE :tag')
+            ->setParameter('tag', '%'.$name.'%')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
     //    /**
     //     * @return Tag[] Returns an array of Tag objects
     //     */
