@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Category;
+use App\Entity\Qrcode;
+use App\Entity\Tag;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -44,8 +46,11 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToRoute("Go to Home",'fa fa-undo','homepage');
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::section('Blog');
+        yield MenuItem::section('Qrcode');
         yield MenuItem::linkToCrud('Categories', 'fa fa-tags', Category::class);
+        yield MenuItem::linkToCrud('Tags', 'fa fa-tags', Tag::class);
+        yield MenuItem::linkToCrud('Qrcode', 'fa fa-tags', Qrcode::class);
+
 
         yield    MenuItem::section('Users');
         yield    MenuItem::linkToCrud('Users', 'fa fa-user', User::class);
